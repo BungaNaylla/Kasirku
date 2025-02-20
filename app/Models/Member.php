@@ -9,5 +9,12 @@ class Member extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama'];
+    protected $table = 'members';
+    protected $fillable = ['NamaMember', 'Alamat', 'NomorTelepon'];
+
+    // Mengatasi nama kolom dengan spasi
+    public function getNamaMemberAttribute()
+    {
+        return $this->attributes['NamaMember'] ?? null;
+    }
 }

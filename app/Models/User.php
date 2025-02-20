@@ -8,16 +8,10 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+    
     use HasFactory, Notifiable;
 
-    protected $table = 'user';
+    protected $table = 'user'; // Pastikan ini benar sesuai nama tabel di database
     protected $fillable = ['NamaLengkap', 'Username', 'password', 'HakAkses'];
-
-    /**
-     * Set password agar otomatis terhashing.
-     */
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
 }
+

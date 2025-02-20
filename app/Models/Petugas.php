@@ -1,3 +1,4 @@
+<?php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,3 +10,9 @@ class Petugas extends Model
 
     protected $fillable = ['nama', 'email', 'password'];
 }
+Petugas::create([
+    'nama_lengkap' => 'Bunga',
+    'username' => 'Kasir',
+    'password' => bcrypt('password123'), // Pastikan password di-hash
+    'hak_akses' => 'Kasir',
+]);

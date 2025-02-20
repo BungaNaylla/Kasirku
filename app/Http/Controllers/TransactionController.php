@@ -18,13 +18,18 @@ class TransactionController extends Controller
 {
     public function index()
     {
-        return view('transaction');
+        
+        $products = Product::all(); // Ambil semua produk dari database
+        $members = Member::all();
+         // Ambil semua member dari database
+        return view('transaction', compact('products', 'members'));
     }
+
 
     public function store(Request $request)
     {
         $request->validate([
-            'member_id' => 'required|exists:members,id',
+            'member_id' => 'required|exists:member,id',
             'items' => 'required|array',
             'items.*.product_id' => 'required|exists:products,id',
             'items.*.jumlah' => 'required|integer|min:1',

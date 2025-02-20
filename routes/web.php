@@ -3,8 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\TransactionController;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use App\Models\Product;
@@ -33,9 +35,10 @@ Route::post('/login', function (Request $request) {
     return back()->with('error', 'Username atau password salah!');
 })->name('login.process');
 
-Route::get('/logout', function () {
-    Session::forget('user');
-    return redirect()->route('login');
+
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/login'); // Arahkan ke halaman login setelah logout
 })->name('logout');
 
 /**
@@ -117,4 +120,6 @@ Route::post('/transaksi/store', [TransactionController::class, 'store']);
 
 Route::put('/products/update/{id}', [ProductController::class, 'update'])->name('products.update');
 Route::delete('/products/destroy/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+Route::get('/total-stok-barang', [ProductController::class, 'getTotalStock']);
 
+Route::get('/laporan', [ReportController::class, 'index'])->name('laporan.index');

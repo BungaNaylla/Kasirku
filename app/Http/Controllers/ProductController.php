@@ -45,4 +45,29 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')->with('success', 'Produk berhasil dihapus');
     }
+    public function getTotalStock()
+    {
+        $totalStokBarang = Product::sum('stok');
+        return response()->json(['totalStokBarang' => $totalStokBarang]);
+    }
+    
+    public function store(Request $request)
+    {
+        $request->validate([
+            'kode_barang' => 'required|unique:products,kode_barang',
+            'NamaProduk' => 'required|string|max:255',
+            'Harga' => 'required|numeric|min:0',
+            'Stok' => 'required|integer|min:0',
+        ]);
+
+        Product::create([
+            'kode_barang' => $request->kode_barang,
+            'NamaProduk' => $request->NamaProduk,
+            'Harga' => $request->Harga,
+            'Stok' => $request->Stok,
+        ]);
+
+        return redirect()->route('products.index')->with('success', 'Produk berhasil ditambahkan.');
+    }
+
 }

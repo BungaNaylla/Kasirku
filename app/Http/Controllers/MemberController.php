@@ -13,4 +13,13 @@ class MemberController extends Controller
         $members = Member::where('nama', 'LIKE', "%{$query}%")->get();
         return response()->json($members);
     }
+    public function store(Request $request)
+    {
+    $request->validate([
+        'NamaMember' => 'required|string|max:255',
+        'Alamat' => 'required|string|max:255',
+        'NomorTelepon' => 'nullable|string|max:20'
+
+    ]);   
+}
 }

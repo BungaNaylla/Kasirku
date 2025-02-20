@@ -31,7 +31,7 @@
                     class="block p-2 rounded-lg {{ request()->is('member') ? 'bg-[#7887C6] text-white' : 'hover:bg-gray-200 text-gray-600' }}">
                     Data Member
                 </a>
-            </li>
+            </li>            
             <li>
                 <a href="{{ url('/datapetugas') }}"
                     class="block p-2 rounded-lg {{ request()->is('datapetugas') ? 'bg-[#7887C6] text-white' : 'hover:bg-gray-200 text-gray-600' }}">
@@ -48,21 +48,26 @@
     </nav>
 
     <!-- Menu Keluar -->
-    <div class="p-4 border-t border-gray-200">
-        <a href="#" onclick="return confirmLogout()"
-            class="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-200 text-gray-600">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1m0-10v1m-6 5h6" />
-            </svg>
-            <span>Keluar</span>
-        </a>
-    </div>
+    <form id="logoutForm" action="{{ route('logout') }}" method="POST" class="hidden">
+        @csrf
+    </form>
+
+    <a href="#" onclick="confirmLogout()"
+        class="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-200 text-gray-600">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1m0-10v1m-6 5h6" />
+        </svg>
+        <span>Keluar</span>
+    </a>
 
     <script>
         function confirmLogout() {
-            return confirm("Apakah Anda yakin ingin keluar?");
+            if (confirm("Apakah Anda yakin ingin keluar?")) {
+                document.getElementById('logoutForm').submit();
+            }
         }
     </script>
+
 </aside>

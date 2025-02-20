@@ -16,25 +16,21 @@ class UserController extends Controller
     }
 
     public function store(Request $request)
-    {
-        Log::info('Data yang diterima:', $request->all());
-        // Validasi input
-        $request->validate([
-            'NamaLengkap' => 'required|string|max:255',
-            'Username' => 'required|string|max:255|unique:user,Username',
-            'Password' => 'required|string|min:6',
-            'HakAkses' => 'required|in:Admin,Kasir',
-        ]);
+{
+    $request->validate([
+        'NamaLengkap' => 'required',
+        'Username' => 'required|unique:user,Username',
+        'password' => 'required|min:6',
+        'HakAkses' => 'required',
+    ]);
 
-        // Simpan data ke database
-        User::create([
-            'NamaLengkap' => $request->NamaLengkap,
-            'Username' => $request->Username,
-            'Password' => Hash::make($request->Password), // Hash password sebelum disimpan
-            'HakAkses' => $request->HakAkses,
-        ]);
+    User::create([
+        'NamaLengkap' => $request->NamaLengkap,
+        'Username' => $request->Username,
+        'password' => bcrypt($request->password), // Hash password sebelum simpan
+        'HakAkses' => $request->HakAkses,
+    ]);
 
-        // Redirect kembali ke halaman Data Petugas dengan pesan sukses
-        return redirect()->route('datapetugas.index')->with('success', 'Petugas berhasil ditambahkan.');
-    }
+    return redirect()->route('datapetugas')->with('success', 'Petugas berhasil ditambahkan');
+}
 }

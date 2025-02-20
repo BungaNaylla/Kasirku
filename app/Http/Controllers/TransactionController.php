@@ -8,7 +8,6 @@ use App\Models\Product;
 use App\Models\Member;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
-use Carbon\Carbon;
 
 
 Route::get('/transaksi', [TransactionController::class, 'index']);
